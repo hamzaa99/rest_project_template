@@ -1,6 +1,28 @@
 package rest.todo.model;
 
-public enum Categorie {
-	PC_Portable,PC_Bureau,Accessoire_Ordinateur,SmartPhone,Tel_Fixe,Accessoire_Telephone,Disque_dur,Cle_USB,Accessoire_Stockage
-
+public class Categorie {
+	
+	private Integer id;
+	private String libelle;
+	
+	public Categorie(Integer id, String libelle){
+		this.id = id;
+		this.libelle = libelle;
+	}
+	
+	public String getLibelle() {
+		return libelle;
+	}
+	
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+	
+	public Integer getId() {
+		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
 }

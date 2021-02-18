@@ -5,15 +5,15 @@ public class Article {
 	private String libelle;
 	private String marque;
 	private Double prix;
-	private Categorie categorie;
+	private Integer categorie;
 	private String photo; //URL de la photo
 	
-	public Article(String libelle,String marque,Double prix,Categorie categorie,String photo){
-		this.libelle=libelle;
-		this.marque=marque;
-		this.prix=prix;
-		this.categorie=categorie;
-		this.photo=photo;
+	public Article(String libelle,String marque,Double prix,Integer categorie,String photo){
+		this.libelle = libelle;
+		this.marque = marque;
+		this.prix = prix;
+		this.categorie = categorie;
+		this.photo = photo;
 	}
 	
 	
@@ -35,10 +35,10 @@ public class Article {
 	public void setPrix(Double prix) {
 		this.prix = prix;
 	}
-	public Categorie getCategorie() {
+	public Integer getCategorie() {
 		return categorie;
 	}
-	public void setCategorie(Categorie categorie) {
+	public void setCategorie(Integer categorie) {
 		this.categorie = categorie;
 	}
 	public String getPhoto() {
