@@ -10,18 +10,19 @@ import rest.todo.model.Article;
 public enum ArticleDao {
     instance;
 
-    private Map<String, Article> contentProvider = new HashMap<>();
+    private HashMap<Integer, Article> contentProvider = new HashMap<>();
 
     private ArticleDao() {
     	Article article = new Article(1, "Libelle1", "marque1", 10.5, "NoURL");
-    	contentProvider.put("1", article);
+    	contentProvider.put(1, article);
+
     }
     
-    public Map<String, Article> getModel(){
+    public HashMap<Integer, Article> getModel(){
         return contentProvider;
     }
     
-    public Map<String, Article> getArticlesByCategorie(Integer id){
+    public Map<Integer, Article> getArticlesByCategorie(Integer id){
         return contentProvider.entrySet().stream().filter(x -> x.getValue().getCategorie() == id).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }

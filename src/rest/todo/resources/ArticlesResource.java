@@ -57,7 +57,9 @@ public class ArticlesResource {
             @FormParam("Categorie") Integer categorie,
             @FormParam("photo") String photo,
             @Context HttpServletResponse servletResponse) throws IOException {
+
                 Article article = new Article(Integer.parseInt(id), libelle, marque, Double.valueOf(prix));
+
                 if (photo != null) {
                     article.setPhoto(photo);
                 }
