@@ -14,7 +14,7 @@ public enum ArticleDao {
 
     private ArticleDao() {
     	
-    	Article article = new Article("Libelle1", "marque1",10.5, Categorie.Accessoire_Ordinateur, "NoURL");
+    	Article article = new Article(1,"Libelle1", "marque1",10.5, Categorie.Accessoire_Ordinateur, "NoURL");
     	contentProvider.put("1", article);
       
     }
