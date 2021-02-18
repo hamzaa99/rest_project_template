@@ -1,5 +1,8 @@
 package rest.todo.model;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class Categorie {
 	
 	private Integer id;
@@ -25,4 +28,6 @@ public class Categorie {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+ 
 }
