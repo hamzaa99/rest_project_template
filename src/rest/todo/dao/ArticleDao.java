@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import rest.todo.model.Article;
+import rest.todo.model.Categorie;
 
 
 public enum ArticleDao {
@@ -14,6 +15,10 @@ public enum ArticleDao {
 
     private ArticleDao() {
     	Article article = new Article(1, "Libelle1", "marque1", 10.5, "NoURL");
+    	System.out.println(CategorieDao.instance.getModel().get(3).getLibelle());
+    	article.addCategorie(CategorieDao.instance.getModel().get(3));
+    	article.addCategorie(CategorieDao.instance.getModel().get(2));
+
     	contentProvider.put(1, article);
 
     }
@@ -22,7 +27,7 @@ public enum ArticleDao {
         return contentProvider;
     }
     
-    public Map<Integer, Article> getArticlesByCategorie(Integer id){
-        return contentProvider.entrySet().stream().filter(x -> x.getValue().getCategorie() == id).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    public Map<Integer, Article> getArticlesByCategorie(Categorie categorie){
+        return contentProvider.entrySet().stream().filter(x -> x.getValue().getCategories().contains(categorie)).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 }
