@@ -1,5 +1,7 @@
 package rest.todo.model;
 
+
+
 public class Categorie {
 	
 	private Integer id;
@@ -25,4 +27,6 @@ public class Categorie {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+ 
 }
