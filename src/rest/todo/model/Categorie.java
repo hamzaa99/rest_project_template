@@ -1,7 +1,6 @@
 package rest.todo.model;
 
-import java.util.Map;
-import java.util.stream.Collectors;
+
 
 public class Categorie {
 	

@@ -1,28 +1,30 @@
 package rest.todo.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Article {
 	private int id;
 	private String libelle;
 	private String marque;
 	private Double prix;
-	private Integer categorie;
+	private List<Categorie> categories;
 	private String photo; //URL de la photo
 	
-	public Article(int id, String libelle, String marque, Double prix, Integer categorie, String photo){
-		this.id = id;
+	public Article(int id, String libelle, String marque, Double prix, String photo){
+		this.setId(id);
 		this.libelle = libelle;
 		this.marque = marque;
 		this.prix = prix;
-		this.categorie = categorie;
 		this.photo = photo;
 	}
 	
 	public Article(int id, String libelle, String marque, Double prix, Integer categorie){
-		this.id = id;
+		this.setId(id);
 		this.libelle = libelle;
 		this.marque = marque;
 		this.prix = prix;
-		this.categorie = categorie;
+		this.categories = new ArrayList<Categorie>();
 	}
 	
 	
@@ -44,17 +46,25 @@ public class Article {
 	public void setPrix(Double prix) {
 		this.prix = prix;
 	}
-	public Integer getCategorie() {
-		return categorie;
+	public List<Categorie> getCategories() {
+		return categories;
 	}
-	public void setCategorie(Integer categorie) {
-		this.categorie = categorie;
+	public void addCategorie(Categorie categorie) {
+		this.categories.add(categorie);
 	}
 	public String getPhoto() {
 		return photo;
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
