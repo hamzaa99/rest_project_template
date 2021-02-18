@@ -49,14 +49,14 @@ public class ArticlesResource {
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public void newArticle(
-    		@FormParam("id")  String id,
+    		@FormParam("id")  Integer id,
             @FormParam("libelle") String libelle,
             @FormParam("marque") String marque,
             @FormParam("prix") String prix,
             @FormParam("Categorie") Integer categorie,
             @FormParam("photo") String photo,
             @Context HttpServletResponse servletResponse) throws IOException {
-                Article article = new Article(Integer.parseInt(id), libelle, marque, Double.valueOf(prix), categorie);
+                Article article = new Article(id, libelle, marque, Double.valueOf(prix), categorie);
                 if (photo != null) {
                     article.setPhoto(photo);
                 }
