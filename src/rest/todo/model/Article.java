@@ -8,7 +8,7 @@ public class Article {
 	private Categorie categorie;
 	private String photo; //URL de la photo
 	
-	Article(String libelle,String marque,Double prix,Categorie categorie,String photo){
+	public Article(String libelle,String marque,Double prix,Categorie categorie,String photo){
 		this.libelle=libelle;
 		this.marque=marque;
 		this.prix=prix;
