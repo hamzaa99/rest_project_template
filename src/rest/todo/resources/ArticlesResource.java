@@ -55,7 +55,7 @@ public class ArticlesResource {
     // add an article to the DAO from an html form
     @POST
     @Produces(MediaType.TEXT_HTML)
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED,MediaType.MULTIPART_FORM_DATA})
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public void newArticle(
     		@FormParam("id")  String id,
             @FormParam("libelle") String libelle,
@@ -63,7 +63,6 @@ public class ArticlesResource {
             @FormParam("prix") String prix,
             @FormParam("Categorie") String categorie,
             @FormParam("photo") String photo,
-            @FormParam("file") InputStream uploadedInputStream,
             @Context HttpServletResponse servletResponse) throws IOException {
 
                 Article article = new Article(Integer.parseInt(id), libelle, marque, Double.valueOf(prix));
@@ -116,6 +115,7 @@ public class ArticlesResource {
     	 
           ArticleDao.instance.getModel().remove(Integer.parseInt(id));
     }
+    
     @Path("/{id}/categories")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

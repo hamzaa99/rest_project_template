@@ -5,6 +5,7 @@ package rest.todo.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import rest.todo.model.Article;
 import rest.todo.model.Categorie;
 import rest.todo.model.Utilisateur;
 
@@ -13,13 +14,14 @@ public enum UtilisateurDao {
 
     instance;
 
-    private HashMap<Integer, Article> contentProvider = new HashMap<>();
+    private HashMap<Integer, Utilisateur> contentProvider = new HashMap<>();
 
-    public UtilisateurDao(){
-        Utilisateur utilisateur = new Utilisateur("id", "username", "password");
+    UtilisateurDao(){
+        Utilisateur utilisateur = new Utilisateur("1", "username", "password");
+        contentProvider.put(1, utilisateur);
     }
 
-    public HashMap<Integer, Categorie> getModel(){
+    public HashMap<Integer, Utilisateur> getModel(){
         return contentProvider;
     }
 }
