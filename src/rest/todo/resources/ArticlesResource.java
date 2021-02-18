@@ -5,7 +5,7 @@ package rest.todo.resources;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -30,6 +30,7 @@ import rest.todo.model.Categorie;
 
 
 /// Will map the resource to the URL articles
+@Path("/articles")
 public class ArticlesResource {
 
     // Allows to insert contextual objects into the class,
@@ -40,16 +41,15 @@ public class ArticlesResource {
     Request request;
 
     // Return the list of all articles to the user in the browser
-    @Path("/articles/")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Article> getArticlesJson() {
+    	System.out.println("entree");
         List<Article> articles = new ArrayList<Article>();
         articles.addAll(ArticleDao.instance.getModel().values());
         return articles;
     }
     // add an article to the DAO from an html form
-    @Path("/articles/")
     @POST
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -74,7 +74,7 @@ public class ArticlesResource {
                 servletResponse.sendRedirect("../create_article.html");
             }
     
-    @Path("/articles/{id}")
+    @Path("/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Article getArticle(@PathParam("id") String id) {
@@ -85,7 +85,7 @@ public class ArticlesResource {
         return article;
     }
     
-    @Path("/articles/{id}")
+    @Path("/{id}")
     @PUT
     public void UpdateArticle(@PathParam("id") String id,
             @FormParam("libelle") String libelle,
@@ -105,13 +105,13 @@ public class ArticlesResource {
           ArticleDao.instance.getModel().put(Integer.parseInt(id), article);
     }
     
-    @Path("/articles/{id}")
+    @Path("/{id}")
     @DELETE
     public void UpdateArticle(@PathParam("id") String id) {
     	 
           ArticleDao.instance.getModel().remove(Integer.parseInt(id));
     }
-    @Path("/articles/{id}/categories")
+    @Path("/{id}/categories")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Categorie> getArticleCategories(@PathParam("id") String id) {
@@ -120,9 +120,8 @@ public class ArticlesResource {
 	}
     
     
- 
     
-  /*  public ArticleResource getTodo(@PathParam("article") String id) {
-        return new ArticleResource(uriInfo, request, id);
-    }*/
+    
+ 
+  
 }

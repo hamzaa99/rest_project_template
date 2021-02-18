@@ -17,6 +17,7 @@ public class Article {
 		this.marque = marque;
 		this.prix = prix;
 		this.photo = photo;
+		this.categories=new ArrayList<Categorie>();
 	}
 	
 	public Article(int id, String libelle, String marque, Double prix){

@@ -15,6 +15,7 @@ public enum ArticleDao {
 
     private ArticleDao() {
     	Article article = new Article(1, "Libelle1", "marque1", 10.5, "NoURL");
+    	System.out.println(CategorieDao.instance.getModel().get(3).getLibelle());
     	article.addCategorie(CategorieDao.instance.getModel().get(3));
     	article.addCategorie(CategorieDao.instance.getModel().get(2));
 
