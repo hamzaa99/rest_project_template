@@ -2,7 +2,7 @@ package rest.todo.resources;
 
 
 
-//import java.io.IOException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +21,7 @@ import javax.ws.rs.core.UriInfo;
 
 import rest.todo.dao.ArticleDao;
 import rest.todo.model.Article;
+import rest.todo.model.Categorie;
 
 
 
@@ -35,13 +36,32 @@ public class ArticlesResource {
     @Context
     Request request;
 
-    // Return the list of todos to the user in the browser
+    // Return the list of all articles to the user in the browser
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Article> getTodosBrowser() {
+    public List<Article> getArticlesJson() {
         List<Article> articles = new ArrayList<Article>();
         articles.addAll(ArticleDao.instance.getModel().values());
         return articles;
     }
+    // add an article to the DAO from an html form
+    @POST
+    @Produces(MediaType.TEXT_HTML)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public void newArticle(
+    		@FormParam("id")  String id,
+            @FormParam("libelle") String libelle,
+            @FormParam("marque") String marque,
+            @FormParam("prix") String prix,
+            @FormParam("Categorie") Integer categorie,
+            @FormParam("photo") String photo,
 
+            @Context HttpServletResponse servletResponse) throws IOException {
+                Article article = new Article(Integer.parseInt(id),libelle,marque,Double.valueOf(prix),categorie);
+                if (photo != null) {
+                    article.setPhoto(photo);
+                }
+                ArticleDao.instance.getModel().put(id, article);
+                servletResponse.sendRedirect("../create_article.html");
+            }
 }

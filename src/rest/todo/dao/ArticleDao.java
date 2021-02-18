@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import rest.todo.model.Article;
-import rest.todo.model.Categorie;
 
 
 public enum ArticleDao {
@@ -14,7 +13,7 @@ public enum ArticleDao {
     private Map<String, Article> contentProvider = new HashMap<>();
 
     private ArticleDao() {
-    	Article article = new Article("Libelle1", "marque1", 10.5, 1, "NoURL");
+    	Article article = new Article(1, "Libelle1", "marque1", 10.5, 1, "NoURL");
     	contentProvider.put("1", article);
     }
     
