@@ -19,7 +19,7 @@ public class Article {
 		this.photo = photo;
 	}
 	
-	public Article(int id, String libelle, String marque, Double prix, Integer categorie){
+	public Article(int id, String libelle, String marque, Double prix){
 		this.setId(id);
 		this.libelle = libelle;
 		this.marque = marque;

@@ -13,7 +13,7 @@ public enum ArticleDao {
     private Map<String, Article> contentProvider = new HashMap<>();
 
     private ArticleDao() {
-    	Article article = new Article(1, "Libelle1", "marque1", 10.5, 1, "NoURL");
+    	Article article = new Article(1, "Libelle1", "marque1", 10.5, "NoURL");
     	contentProvider.put("1", article);
     }
     

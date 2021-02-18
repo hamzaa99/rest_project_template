@@ -20,6 +20,7 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
 import rest.todo.dao.ArticleDao;
+import rest.todo.dao.CategorieDao;
 import rest.todo.model.Article;
 import rest.todo.model.Categorie;
 
@@ -56,9 +57,12 @@ public class ArticlesResource {
             @FormParam("Categorie") Integer categorie,
             @FormParam("photo") String photo,
             @Context HttpServletResponse servletResponse) throws IOException {
-                Article article = new Article(Integer.parseInt(id), libelle, marque, Double.valueOf(prix), categorie);
+                Article article = new Article(Integer.parseInt(id), libelle, marque, Double.valueOf(prix));
                 if (photo != null) {
                     article.setPhoto(photo);
+                }
+                if (categorie != null) {
+                    article.addCategorie(CategorieDao.instance.getModel())
                 }
                 ArticleDao.instance.getModel().put(id, article);
                 servletResponse.sendRedirect("../create_article.html");
