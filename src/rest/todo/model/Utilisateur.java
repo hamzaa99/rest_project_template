@@ -1,11 +1,10 @@
 package rest.todo.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
 
+//import javax.xml.bind.annotation.XmlRootElement;
 
+public abstract class Utilisateur {
 
-public class Utilisateur {
-    
 
     private String id;
     private String username;
@@ -43,6 +42,6 @@ public class Utilisateur {
     }
 
 
-    
+
 
 }

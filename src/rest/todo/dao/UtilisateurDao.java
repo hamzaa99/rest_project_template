@@ -1,24 +1,24 @@
-package rest.todo.dao;
+package rest.todo.DAO;
 
 
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import rest.todo.model.Article;
-import rest.todo.model.Categorie;
+import rest.todo.model.Admin;
+import rest.todo.model.Customer;
 import rest.todo.model.Utilisateur;
 
 
-public enum UtilisateurDao {
+public enum UtilisateurDAO {
 
     instance;
 
     private HashMap<Integer, Utilisateur> contentProvider = new HashMap<>();
 
-    UtilisateurDao(){
-        Utilisateur utilisateur = new Utilisateur("1", "username", "password");
-        contentProvider.put(1, utilisateur);
+    UtilisateurDAO(){
+        Utilisateur admin = new Admin("1", "username", "password");
+        contentProvider.put(1, admin);
+        Utilisateur customer = new Customer("2", "username2", "password2");
+        contentProvider.put(2, customer);
     }
 
     public HashMap<Integer, Utilisateur> getModel(){

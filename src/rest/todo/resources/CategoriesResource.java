@@ -2,13 +2,6 @@ package rest.todo.resources;
 
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -23,81 +16,165 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.ApplicationPath;
 
-import rest.todo.dao.ArticleDao;
-import rest.todo.dao.CategorieDao;
+import rest.todo.DAO.CategorieDAO;
+import rest.todo.DAO.ArticleDAO;
+
 import rest.todo.model.Article;
 import rest.todo.model.Categorie;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-
-/// Will map the resource to the URL articles
 @Path("/categories")
 public class CategoriesResource {
-
-    // Allows to insert contextual objects into the class,
+	   // Allows to insert contextual objects into the class,
     // e.g. ServletContext, Request, Response, UriInfo
     @Context
     UriInfo uriInfo;
     @Context
     Request request;
-
-    // Return the list of all categories to the user in the browser
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Categorie> getCategoriesJson() {
-    	System.out.println("entree");
         List<Categorie> categories = new ArrayList<Categorie>();
-        categories.addAll(CategorieDao.instance.getModel().values());
+        categories.addAll(CategorieDAO.instance.getModel().values());
         return categories;
     }
-    // add a categorie to the DAO from an html form
+    
+    
     @POST
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public void newCategorie(
-    		@FormParam("id")  Integer id,
             @FormParam("libelle") String libelle,
             @Context HttpServletResponse servletResponse) throws IOException {
-                CategorieDao.instance.getModel().put(id, new Categorie(id, libelle));
-                servletResponse.sendRedirect("../create_article.html");
+    	Integer idmax = CategorieDAO.instance.getModel().keySet().stream().max(Integer::compare).get(); 
+
+        Categorie categorie = new Categorie(idmax+1, libelle);
+
+        CategorieDAO.instance.getModel().put(idmax+1, categorie);
+        servletResponse.sendRedirect("../create_article.html");
     }
-    
     @Path("/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Categorie getCategorie(@PathParam("id") String id) {
-    	System.out.println("entree");
-        Categorie categorie = CategorieDao.instance.getModel().get(id);
+        Categorie categorie = CategorieDAO.instance.getModel().get(Integer.parseInt(id));
         if(categorie==null)
-            throw new RuntimeException("Get: categorie with " + id +  " not found");
+            throw new RuntimeException("Get: article with " + id +  " not found");
         return categorie;
     }
     
     @Path("/{id}")
     @PUT
-    @Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.MULTIPART_FORM_DATA})
-    public void UpdateCategorie(@PathParam("id") Integer id,
-            @FormParam("libelle") String libelle,
-            @Context HttpServletResponse servletResponse) {
-          	if(CategorieDao.instance.getModel().get(id) != null) {
-          			CategorieDao.instance.getModel().get(id).setLibelle(libelle);
-          	}
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED,MediaType.MULTIPART_FORM_DATA})
+    public void UpdateCategorie(@PathParam("id") String id,
+    						  @FormParam("libelle") String libelle,                          
+                              @Context HttpServletResponse servletResponse) {
+        Categorie categorie = CategorieDAO.instance.getModel().get(Integer.parseInt(id));
+        CategorieDAO.instance.getModel().put(Integer.parseInt(id), categorie);
     }
     
     @Path("/{id}")
     @DELETE
-    public void deleteCategorie(@PathParam("id") String id) {
-    	CategorieDao.instance.getModel().remove(id);
+    public void UpdateCategorie(@PathParam("id") String id) {
+
+    	CategorieDAO.instance.getModel().remove(Integer.parseInt(id));
     }
     
-    @Path("/{id}/categories")
+    @Path("/{id}/articles")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<Integer, Categorie> getArticleByCategories(@PathParam("id") Integer id) {
-    	return ArticleDao.instance.getModel().entrySet().stream().filter(x -> x.getValue().getCategories().contains(id)).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        
-	}
+    public List<Article> getCategorieArticles(@PathParam("id") String id) {
+
+    	Categorie categorie =CategorieDAO.instance.getModel().get(Integer.parseInt(id));
+    	return categorie.getArticles();
+    }
+    @Path("/{id}/sous-categories")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Categorie> getSousCategories(@PathParam("id") String id) {
+
+    	Categorie categorie =CategorieDAO.instance.getModel().get(Integer.parseInt(id));
+    	return categorie.getSousCategories();
+    }
+    
+    @Path("/{id}/categories-parent")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Categorie> getCategoriesParent(@PathParam("id") String id) {
+
+    	Categorie categorie =CategorieDAO.instance.getModel().get(Integer.parseInt(id));
+    	return categorie.getCategoriesParent();
+    }
+    
+    @Path("/{id}/articles/{id_article}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public void addArticle(@PathParam("id") String id,@PathParam("id_article") String id_article) {
+
+    	Categorie categorie =CategorieDAO.instance.getModel().get(Integer.parseInt(id));
+    	Article article = ArticleDAO.instance.getModel().get(Integer.parseInt(id_article));
+    	article.addCategorie(categorie);
+    }
+    @Path("/{id}/sous-categories/{id_sousCategorie}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public void addSousCategories(@PathParam("id") String id,@PathParam("id_sousCategorie") String id_sousCategorie) {
+
+    	Categorie categorie =CategorieDAO.instance.getModel().get(Integer.parseInt(id));
+    	Categorie sousCategorie =CategorieDAO.instance.getModel().get(Integer.parseInt(id_sousCategorie));
+    	categorie.addSousCategorie(sousCategorie);
+    	sousCategorie.addCategorieParent(categorie);
+    }
+    
+    @Path("/{id}/categories-parent/{id_categorieParent}")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public void addCategoriesParent(@PathParam("id") String id,@PathParam("id_categorieParent") String id_categorieParent) {
+
+    	Categorie categorie =CategorieDAO.instance.getModel().get(Integer.parseInt(id));
+    	Categorie categorieParent =CategorieDAO.instance.getModel().get(Integer.parseInt(id_categorieParent));
+    	categorie.addCategorieParent(categorieParent);
+    	categorieParent.addSousCategorie(categorie);
+
+    }
+    
+    
+    @Path("/{id}/articles/{id_article}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteArticle(@PathParam("id") String id,@PathParam("id_article") String id_article) {
+
+    	Categorie categorie =CategorieDAO.instance.getModel().get(Integer.parseInt(id));
+    	Article article = ArticleDAO.instance.getModel().get(Integer.parseInt(id_article));
+    	categorie.removeArticle(article);
+    }
+    @Path("/{id}/sous-categories/{id_sousCategorie}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteSousCategories(@PathParam("id") String id,@PathParam("id_sousCategorie") String id_sousCategorie) {
+
+    	Categorie categorie =CategorieDAO.instance.getModel().get(Integer.parseInt(id));
+    	Categorie sousCategorie =CategorieDAO.instance.getModel().get(Integer.parseInt(id_sousCategorie));
+    	categorie.removeSousCategorie(sousCategorie);
+    	sousCategorie.removeCategorieParent(categorie);
+
+    }
+    
+    @Path("/{id}/categories-parent/{id_categorieParent}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteCategoriesParent(@PathParam("id") String id,@PathParam("id_categorieParent") String id_categorieParent) {
+
+    	Categorie categorie =CategorieDAO.instance.getModel().get(Integer.parseInt(id));
+    	Categorie categorieParent =CategorieDAO.instance.getModel().get(Integer.parseInt(id_categorieParent));
+    	categorie.removeCategorieParent(categorieParent);
+    	categorieParent.removeSousCategorie(categorie);
+
+    }
+
 
 }
