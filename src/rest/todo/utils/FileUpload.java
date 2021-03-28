@@ -32,7 +32,7 @@ public class FileUpload {
 	    }
 
 	}
-	//@DefaultValue("true") @FormDataParam("enabled") boolean enabled, @FormDataParam("file") InputStream uploadedInputStream,@FormDataParam("file") FormDataContentDisposition fileDetail
+/*	//@DefaultValue("true") @FormDataParam("enabled") boolean enabled, @FormDataParam("file") InputStream uploadedInputStream,@FormDataParam("file") FormDataContentDisposition fileDetail
 	public void uploadFile( boolean enabled, InputStream uploadedInputStream,FormDataContentDisposition fileDetail) {
 	     //Your local disk path where you want to store the file
 	    String uploadedFileLocation = "D://uploadedFiles/" + fileDetail.getFileName();
@@ -52,5 +52,5 @@ public class FileUpload {
 	 //   return Response.status(200).entity(output).build();
 
 	}
-
+*/
 }

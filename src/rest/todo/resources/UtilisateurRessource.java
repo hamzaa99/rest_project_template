@@ -61,6 +61,29 @@ public class UtilisateurRessource {
            
     		
         }
+    
+    @Path("/sign_in")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Utilisateur ConnexionJson(Utilisateur utilisateurRequest,
+        @Context HttpServletResponse servletResponse) throws RuntimeException {
+    		
+       Optional<Utilisateur> utilisateur = UtilisateurDAO.instance.getModel().values().stream().filter(u -> (u.getUsername().equals(utilisateurRequest.getUsername())) && (u.getPassword().equals(utilisateurRequest.getPassword()))).findFirst(); 
+    								
+    			  if(!utilisateur.isPresent()) {
+    		          throw new RuntimeException("Utilisateur introuvable");
+    			  }
+    			 /* {
+    				  System.out.println("non trouvé Username : "+username+" password : "+password);
+    			        List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+    			        utilisateurs.addAll(UtilisateurDAO.instance.getModel().values());
+    			        return utilisateurs.get(0);
+    			  }*/
+    			  else return utilisateur.get();
+           
+    		
+        }
 
 
 

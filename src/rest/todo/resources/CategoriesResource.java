@@ -57,6 +57,18 @@ public class CategoriesResource {
         CategorieDAO.instance.getModel().put(idmax+1, categorie);
         servletResponse.sendRedirect("../create_article.html");
     }
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void newCategorieJson(
+            Categorie c,
+            @Context HttpServletResponse servletResponse) throws IOException {
+    	Integer idmax = CategorieDAO.instance.getModel().keySet().stream().max(Integer::compare).get(); 
+
+        c.setId(idmax+1);
+
+        CategorieDAO.instance.getModel().put(idmax+1, c);
+    }
     @Path("/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
