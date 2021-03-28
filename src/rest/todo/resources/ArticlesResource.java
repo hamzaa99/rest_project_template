@@ -69,6 +69,15 @@ public class ArticlesResource {
         ArticleDAO.instance.getModel().put(Integer.parseInt(id), article);
         servletResponse.sendRedirect("../create_article.html");
     }
+    @POST
+    @Produces(MediaType.TEXT_HTML)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void newArticleJSON(
+            Article articleRequest,
+            @Context HttpServletResponse servletResponse) throws IOException {
+      ArticleDAO.instance.getModel().put(articleRequest.getId(), articleRequest);
+        
+    }
 
     @Path("/{id}")
     @GET
@@ -79,7 +88,7 @@ public class ArticlesResource {
         if(article==null)
             throw new RuntimeException("Get: article with " + id +  " not found");
         return article;
-    }
+ }
 
     @Path("/{id}")
     @PUT

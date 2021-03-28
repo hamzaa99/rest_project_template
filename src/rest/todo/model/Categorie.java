@@ -26,6 +26,9 @@ public class Categorie {
         this.sousCategories = new ArrayList<>();
         this.categoriesParent = new ArrayList<>();
     }
+    public Categorie() {
+    	
+    }
 
     public String getLibelle() {
         return libelle;

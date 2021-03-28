@@ -31,6 +31,10 @@ public class Article {
         this.prix = prix;
         this.categories = new ArrayList<Categorie>();
     }
+    public Article() {
+    	this.categories = new ArrayList<Categorie>();
+    }
+    
 
 
     public String getLibelle() {
