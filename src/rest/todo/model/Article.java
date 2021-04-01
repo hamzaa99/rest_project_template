@@ -61,6 +61,7 @@ public class Article {
     public void addCategorie(Categorie categorie) {
         this.categories.add(categorie);
        categorie.addArticle(this);
+       System.out.println("categorie : "+categorie.getId()+" ajouté !!");
     }
     public void removeCategorie(Categorie categorie) {
     	this.categories.remove(categorie);

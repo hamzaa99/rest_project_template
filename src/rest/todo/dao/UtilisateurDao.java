@@ -14,9 +14,9 @@ public enum UtilisateurDAO {
     private HashMap<Integer, Utilisateur> contentProvider = new HashMap<>();
 
     UtilisateurDAO(){
-        Utilisateur admin = new Utilisateur("1", "username", "password","admin");
+        Utilisateur admin = new Utilisateur("1", "username","test1@mail.com", "password","admin");
         contentProvider.put(1, admin);
-        Utilisateur customer = new Utilisateur("2", "username2", "password2","customer");
+        Utilisateur customer = new Utilisateur("2", "username2","test2@mail.com", "password2","customer");
         contentProvider.put(2, customer);
     }
 

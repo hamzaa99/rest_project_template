@@ -69,7 +69,7 @@ public class UtilisateurRessource {
     public Utilisateur ConnexionJson(Utilisateur utilisateurRequest,
         @Context HttpServletResponse servletResponse) throws RuntimeException {
     		
-       Optional<Utilisateur> utilisateur = UtilisateurDAO.instance.getModel().values().stream().filter(u -> (u.getUsername().equals(utilisateurRequest.getUsername())) && (u.getPassword().equals(utilisateurRequest.getPassword()))).findFirst(); 
+       Optional<Utilisateur> utilisateur = UtilisateurDAO.instance.getModel().values().stream().filter(u -> (u.getEmail().equals(utilisateurRequest.getEmail())) && (u.getPassword().equals(utilisateurRequest.getPassword()))).findFirst(); 
     								
     			  if(!utilisateur.isPresent()) {
     		          throw new RuntimeException("Utilisateur introuvable");

@@ -15,14 +15,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import rest.todo.DAO.ArticleDAO;
 import rest.todo.DAO.CategorieDAO;
+import rest.todo.DAO.ImagesDAO;
 import rest.todo.model.Article;
 import rest.todo.model.Categorie;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,6 +131,11 @@ public class ArticlesResource {
         Article article = ArticleDAO.instance.getModel().get(Integer.parseInt(id));
         return article.getCategories();
     }
+    
+    
+   
+
+
 
 
 

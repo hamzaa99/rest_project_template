@@ -12,13 +12,15 @@ public class Utilisateur {
     private String username;
     private String password;
     private String role;
+    private String email;
 
 
 
-    public Utilisateur(String id, String username, String password,String role){
+    public Utilisateur(String id, String username,String email, String password,String role){
         this.id = id;
         this.username = username;
         this.password = password;
+        this.setEmail(email);
         this.setRole(role);
     }
     public Utilisateur( String username, String password){
@@ -56,6 +58,12 @@ public class Utilisateur {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 
