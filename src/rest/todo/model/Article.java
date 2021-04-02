@@ -5,13 +5,17 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.*;
 
+import rest.todo.DAO.ArticleDAO;
+import rest.todo.DAO.CategorieDAO;
+
 
 public class Article {
     private int id;
     private String libelle;
     private String marque;
+	private String id_categorie;
     private Double prix;
-    @JsonBackReference
+    @JsonIgnore
     private List<Categorie> categories;
     private String photo; //URL de la photo
 
@@ -33,6 +37,7 @@ public class Article {
     }
     public Article() {
     	this.categories = new ArrayList<Categorie>();
+    	this.id = ArticleDAO.instance.getModel().keySet().stream().max(Integer::compare).get();
     }
     
 
@@ -80,5 +85,14 @@ public class Article {
     public void setId(int id) {
         this.id = id;
     }
+	public String getId_categorie() {
+		return id_categorie;
+	}
+
+	public void setId_categorie(String id_categorie) {
+		this.id_categorie = id_categorie;
+	}
+	
+
 
 }

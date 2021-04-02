@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /// Will map the resource to the URL articles
@@ -76,14 +77,43 @@ public class ArticlesResource {
         servletResponse.sendRedirect("../create_article.html");
     }
     @POST
-    @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_JSON)
-    public void newArticleJSON(
+    @Produces(MediaType.APPLICATION_JSON)
+    public Article newArticleJSON(
             Article articleRequest,
             @Context HttpServletResponse servletResponse) throws IOException {
-      ArticleDAO.instance.getModel().put(articleRequest.getId(), articleRequest);
-        
+    	if(articleRequest.getId_categorie()!=null) {
+		Categorie categorie = CategorieDAO.instance.getModel().get(Integer.valueOf(articleRequest.getId_categorie()));
+		articleRequest.addCategorie(categorie);
+    	}
+        ArticleDAO.instance.getModel().put(articleRequest.getId(), articleRequest);
+
+        return articleRequest;
     }
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Article updateArticleJSON(
+            Article articleRequest,
+            @PathParam("id") String id,
+            @Context HttpServletResponse servletResponse) throws IOException {
+
+    	Article article = ArticleDAO.instance.getModel().remove(Integer.parseInt(id));
+    	List<Categorie> categories = article.getCategories();
+    	for (Categorie cat : categories) {
+    		cat.removeArticle(article);
+    	}
+    	if(articleRequest.getId_categorie()!=null) {
+    		Categorie categorie = CategorieDAO.instance.getModel().get(Integer.valueOf(articleRequest.getId_categorie()));
+    		articleRequest.addCategorie(categorie);
+        	}
+            ArticleDAO.instance.getModel().put(articleRequest.getId(), articleRequest);
+
+            return articleRequest;
+    	
+            }
+
 
     @Path("/{id}")
     @GET
@@ -120,8 +150,11 @@ public class ArticlesResource {
     @Path("/{id}")
     @DELETE
     public void UpdateArticle(@PathParam("id") String id) {
-
-        ArticleDAO.instance.getModel().remove(Integer.parseInt(id));
+    	Article article = ArticleDAO.instance.getModel().remove(Integer.parseInt(id));
+    	List<Categorie> categories = article.getCategories();
+    	for (Categorie cat : categories) {
+    		cat.removeArticle(article);
+    	}
     }
 
     @Path("/{id}/categories")
